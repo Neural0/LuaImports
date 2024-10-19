@@ -1,4 +1,3 @@
-<i> -- File management/readme inspired by hydroxide https://github.com/Upbolt/Hydroxide </i>
 ## Script
 ```lua
 if webImport then return end
