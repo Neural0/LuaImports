@@ -9,6 +9,4 @@ local function webImport(file) return loadstring(game:HttpGetAsync(("https://raw
 
 webImport("ui/main")
 ```
-
-# Lua Imports
 <i> Lua code storage solutions for optimized and more readable code enthusiasts. </i>
