@@ -1,8 +1,8 @@
 local exmath = {}
 
-exmath["sum"] = function(num1,num2) return num1 + num2 end
-exmath["dif"] = function(num1,num2) return num1 - num2 end
-exmath["quo"] = function(num1,num2) return num1 / num2 end
-exmath["pro"] = function(num1,num2) return num1 * num2 end
+function exmath.sum(num1,num2) return num1 + num2 end
+function exmath.dif(num1,num2) return num1 - num2 end
+function exmath.quo(num1,num2) return num1 / num2 end
+function exmath.pro(num1,num2) return num1 * num2 end
 
 return exmath
