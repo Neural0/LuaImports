@@ -1,4 +1,4 @@
-if not isfile or not writefile or not delfile or not getcustomasset then error("executor not supported") return end
+if not isfile or not writefile or not getcustomasset then error("executor not supported") return end
 
 local fontmanager = {}
 
