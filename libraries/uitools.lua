@@ -1,9 +1,18 @@
 local uitools = {}
 local connections = {}
+local objects = {}
 
 local UserInputService = cloneref(game:GetService("UserInputService")) or game:GetService("UserInputService")
 local TweenService = cloneref(game:GetService("TweenService")) or game:GetService("TweenService")
 
+function uitools:create(Class: Instance, Properties: PhysicalProperties)
+    local _Instance = type(Class) == 'string' and Instance.new(Class) or Class
+    for Property, Value in next, Properties do
+        _Instance[Property] = Value
+    end
+    table.insert(objects, _Instance)
+    return _Instance
+end
 function uitools:tween(object, goal, callback)
 	local tween = TweenService:Create(object, tweenInfo, goal)
 	tween.Completed:Connect(callback or function() end)
@@ -25,13 +34,12 @@ function uitools:mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, cli
         end))
     end))
 end
-function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, Element: boolean, Thickness: number, _ZIndex: number)
+function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, Element: boolean, Thickness: number, _ZIndex: number, Color)
     if not Thickness then Thickness = 1 end
     if not _ZIndex then _ZIndex = 1 end
-    local stroke, Color, Mode
-    if Element then Color = Colors.ElementBorder Mode = Enum.LineJoinMode.Round else Color = Colors.BorderColor Mode = Enum.LineJoinMode.Miter end
+    local stroke, Mode
     if Inner and Padding then
-        local strokeholder = Utility:Create("Frame", {
+        local strokeholder = self:create("Frame", {
             Parent = GUIOBJECT,
             BackgroundTransparency = 1,
             Size = UDim2.new(1,-Padding,1,-Padding),
@@ -39,7 +47,7 @@ function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, El
             Position = UDim2.new(0.5,0,0.5,0),
             ZIndex = _ZIndex
         })
-        stroke = Utility:Create("UIStroke", {
+        stroke = self:create("UIStroke", {
             Parent = strokeholder,
             Color = Color,
             Thickness = Thickness,
@@ -47,7 +55,7 @@ function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, El
             LineJoinMode = Mode
         })
     else
-        stroke = Utility:Create("UIStroke", {
+        stroke = self:create("UIStroke", {
             Parent = GUIOBJECT,
             Color = Color,
             Thickness = Thickness,
@@ -103,4 +111,4 @@ function uitools:draggable(object: Instance, ignored: Instance)
     return connections
 end
 
-return uitools, connections
+return uitools, connections, objects
