@@ -2,41 +2,35 @@ if not isfile or not writefile or not delfile or not getcustomasset then error("
 
 local fontmanager = {}
 
-local Http = game:GetService("HttpService")
+local HttpService = cloneref(game:GetService("HttpService"));
+local function register(Name, Asset)
+    if not isfile(Asset.Id) then writefile(Asset.Id, Asset.Font) end
 
-local function RegisterFont(Name: string, Asset)
-    local Id = Asset.Id
-    if isfile(Id) then return end
-    writefile(Id, Asset.Font)
     local Data = {
         name = Name,
-        faces = {
-            {
-                name = "Regular",
-                weight = 200,
-                style = normal,
-                assetId = getcustomasset(Id),
-            },
-        },
+        faces = {{
+            name = "Regular",
+            weight = 400,
+            style = "normal",
+            assetId = getcustomasset(Asset.Id)
+        }}
     }
-    writefile(Id, Http:JSONEncode(Data))
-    return getcustomasset(Id);
+    
+    writefile(Name .. ".font", HttpService:JSONEncode(Data))
+    return getcustomasset(Name .. ".font")
 end
 
 function fontmanager.create(name)
-    local fontdata = game:HttpGet("https://raw.githubusercontent.com/Neural0/base64fonts/main/" .. name)
-    if not fontdata then error("name not found in repository") end
-
-    local font = Font.new(RegisterFont({
-        Id = name .. ".ttf",
-        Font = crypt.base64.decode(fontdata)
-    }))
-
-    return font
+	local decoded = request({Url = "https://raw.githubusercontent.com/Neural0/base64fonts/main/" .. name}).Body
+    local font = register(name,{
+        Id = name .. ".ttf", Font = crypt.base64.decode(decoded)
+    })
 end
-function fontmanager.delete(name)
-    if not isfile(name .. ".ttf") then error("no file found") end
-    delfile(name .. ".ttf")
+function fontmanager.get(Name)
+    if isfile(Name .. ".font") then
+        return Font.new(getcustomasset(Name .. ".font"))
+    else warning("Font" .. Name .. "Not Found")
+    end;
 end
 
 return fontmanager
