@@ -21,7 +21,7 @@ local function register(Name, Asset)
 end
 
 function fontmanager.create(name)
-	local decoded = request({Url = "https://raw.githubusercontent.com/Neural0/base64fonts/main/" .. name}).Body
+	local decoded = request({Url = "https://raw.githubusercontent.com/neuralls/Lutra/refs/heads/main/Fonts/" .. name}).Body
     local font = register(name,{
         Id = name .. ".ttf", Font = crypt.base64.decode(decoded)
     })
