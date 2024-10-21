@@ -1,5 +1,7 @@
 local signalmanager = {}
-local storedsignals = {}
+
+local storedsignals
+signalmanager.configure = function(exttable) storedsignals = exttable end
 
 signalmanager.create = function(signal: RBXScriptSignal, callback)
     local connection = signal:Connect(callback)
