@@ -7,6 +7,7 @@ local TweenService = cloneref(game:GetService("TweenService")) or game:GetServic
 
 function uitools:create(Class: Instance, Properties: PhysicalProperties)
     local _Instance = type(Class) == 'string' and Instance.new(Class) or Class
+	print(typeof(Properties))
     for Property, Value in next, Properties do
         _Instance[Property] = Value
     end
