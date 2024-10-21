@@ -50,7 +50,7 @@ function uitools.stroke(parameters)
         local strokeholder = uitools.create("Frame", {
             Parent = props.GUIOBJECT,
             BackgroundTransparency = 1,
-            Size = UDim2.new(1,-Padding,1,-Padding),
+            Size = UDim2.new(1,-props.Padding,1,-props.Padding),
             AnchorPoint = Vector2.new(0.5,0.5),
             Position = UDim2.new(0.5,0,0.5,0),
             ZIndex = props._ZIndex
