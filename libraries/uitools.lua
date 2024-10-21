@@ -5,21 +5,20 @@ local objects = {}
 local UserInputService = cloneref(game:GetService("UserInputService")) or game:GetService("UserInputService")
 local TweenService = cloneref(game:GetService("TweenService")) or game:GetService("TweenService")
 
-function uitools:create(Class: Instance, Properties: PhysicalProperties)
+function uitools.create(Class: Instance, Properties: PhysicalProperties)
     local _Instance = type(Class) == 'string' and Instance.new(Class) or Class
-	print(typeof(Properties))
     for Property, Value in next, Properties do
         _Instance[Property] = Value
     end
     table.insert(objects, _Instance)
     return _Instance
 end
-function uitools:tween(object, goal, callback)
+function uitools.tween(object, goal, callback)
 	local tween = TweenService:Create(object, tweenInfo, goal)
 	tween.Completed:Connect(callback or function() end)
 	tween:Play()
 end
-function uitools:mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, clickignore: boolean)
+function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, clickignore: boolean)
     table.insert(connections,GUIOBJECT.MouseEnter:Connect(function()
         if onEnter then onEnter() end
         table.insert(connections,UserInputService.InputBegan:Connect(function(input)
@@ -35,12 +34,12 @@ function uitools:mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, cli
         end))
     end))
 end
-function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, Element: boolean, Thickness: number, _ZIndex: number, Color)
+function uitools.stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, Element: boolean, Thickness: number, _ZIndex: number, Color)
     if not Thickness then Thickness = 1 end
     if not _ZIndex then _ZIndex = 1 end
     local stroke, Mode
     if Inner and Padding then
-        local strokeholder = self:create("Frame", {
+        local strokeholder = uitools.create("Frame", {
             Parent = GUIOBJECT,
             BackgroundTransparency = 1,
             Size = UDim2.new(1,-Padding,1,-Padding),
@@ -48,7 +47,7 @@ function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, El
             Position = UDim2.new(0.5,0,0.5,0),
             ZIndex = _ZIndex
         })
-        stroke = self:create("UIStroke", {
+        stroke = uitools.create("UIStroke", {
             Parent = strokeholder,
             Color = Color,
             Thickness = Thickness,
@@ -56,7 +55,7 @@ function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, El
             LineJoinMode = Mode
         })
     else
-        stroke = self:create("UIStroke", {
+        stroke = uitools.create("UIStroke", {
             Parent = GUIOBJECT,
             Color = Color,
             Thickness = Thickness,
@@ -66,11 +65,11 @@ function uitools:stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, El
     end
     return stroke
 end
-function uitools:relight(color3: Color3, intensity: number)
+function uitools.relight(color3: Color3, intensity: number)
     if not intensity then intensity = 0.5 end
     return Color3.fromRGB(math.clamp(color3.r * 255 * intensity, 0, 255), math.clamp(color3.g * 255 * intensity, 0, 255), math.clamp(color3.b * 255 * intensity, 0, 255))
 end
-function uitools:draggable(object: Instance, ignored: Instance)
+function uitools.draggable(object: Instance, ignored: Instance)
     local hover = false
     if ignored then
         table.insert(connections,ignored.MouseEnter:Connect(function() hover = true end))
