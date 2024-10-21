@@ -14,7 +14,7 @@ function uitools.create(Class: Instance, Properties: PhysicalProperties)
     return _Instance
 end
 function uitools.tween(object, goal, callback)
-	local tween = TweenService:Create(object, tweenInfo, goal)
+	local tween = TweenService:Create(object, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), goal)
 	tween.Completed:Connect(callback or function() end)
 	tween:Play()
 end
