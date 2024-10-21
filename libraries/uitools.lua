@@ -34,33 +34,41 @@ function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, cli
         end))
     end))
 end
-function uitools.stroke(GUIOBJECT: Instance, Inner: boolean, Padding: number, Element: boolean, Thickness: number, _ZIndex: number, Color)
-    if not Thickness then Thickness = 1 end
-    if not _ZIndex then _ZIndex = 1 end
+function uitools.stroke(parameters)
+    local props = {
+        GUIOBJECT   = parameters.GUIOBJECT or nil,
+        Inner       = parameters.Inner or false,
+        Padding     = parameters.Padding or 0,
+        Element     = parameters.Element or false,
+        Thickness   = parameters.Thickness or 1,
+        _ZIndex     = parameters._ZIndex or 1,
+        Color       = parameters.Color or Color3.new(1, 1, 1),
+        Mode        = parameters.Mode or Enum.LineJoinMode.Miter
+    }
     local stroke, Mode
-    if Inner and Padding then
+    if props.Inner and props.Padding then
         local strokeholder = uitools.create("Frame", {
-            Parent = GUIOBJECT,
+            Parent = props.GUIOBJECT,
             BackgroundTransparency = 1,
             Size = UDim2.new(1,-Padding,1,-Padding),
             AnchorPoint = Vector2.new(0.5,0.5),
             Position = UDim2.new(0.5,0,0.5,0),
-            ZIndex = _ZIndex
+            ZIndex = props._ZIndex
         })
         stroke = uitools.create("UIStroke", {
             Parent = strokeholder,
-            Color = Color,
-            Thickness = Thickness,
+            Color = props.Color,
+            Thickness = props.Thickness,
             ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            LineJoinMode = Mode
+            LineJoinMode = props.Mode
         })
     else
         stroke = uitools.create("UIStroke", {
-            Parent = GUIOBJECT,
-            Color = Color,
-            Thickness = Thickness,
+            Parent = props.GUIOBJECT,
+            Color =props. Color,
+            Thickness = props.Thickness,
             ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            LineJoinMode = Mode
+            LineJoinMode = props.Mode
         })
     end
     return stroke
