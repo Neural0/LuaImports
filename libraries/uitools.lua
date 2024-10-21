@@ -1,11 +1,15 @@
 local uitools = {}
-local connections = {}
-local objects = {}
 
 local UserInputService = cloneref(game:GetService("UserInputService")) or game:GetService("UserInputService")
 local TweenService = cloneref(game:GetService("TweenService")) or game:GetService("TweenService")
 
 -- Helper function to add connections
+
+local connections, objects
+function uitools.configure(extconnections, extobjects)
+    connections, extobjects = extconnections, extobjects
+end
+
 local function addConnection(connection)  table.insert(connections, connection) end
 
 function uitools.create(Class: Instance, Properties: PhysicalProperties)
@@ -135,4 +139,4 @@ function uitools.draggable(object: Instance, ignored: Instance)
     end))
 end
 
-return uitools, connections, objects
+return uitools
