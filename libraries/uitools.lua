@@ -7,7 +7,7 @@ local TweenService = cloneref(game:GetService("TweenService")) or game:GetServic
 
 local connections, objects
 function uitools.configure(extconnections, extobjects)
-    connections, extobjects = extconnections, extobjects
+    connections, objects = extconnections, extobjects
 end
 
 local function addConnection(connection)  table.insert(connections, connection) end
