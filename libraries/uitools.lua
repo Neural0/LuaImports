@@ -2,7 +2,6 @@ local uitools = {}
 
 local UserInputService = cloneref(game:GetService("UserInputService")) or game:GetService("UserInputService")
 local TweenService = cloneref(game:GetService("TweenService")) or game:GetService("TweenService")
-local get_mouse = cloneref(game:GetService("Players")).LocalPlayer or game:GetService("Players").LocalPlayer:GetMouse()
 -- Helper function to add connections
 
 local connections, objects
@@ -145,9 +144,9 @@ function uitools.resizable(background: Instance, object: Instance)
    addConnection(object.MouseButton1Down:Connect(function(input)
         dragging = true
     end))
-    addConnection(get_mouse.Move:Connect(function(input)
+    addConnection(game:GetService("Players").LocalPlayer:GetMouse().Move:Connect(function(input)
         if dragging then
-            local MouseLocation = UserInputService:GetMouseLocation()
+            local MouseLocation = game:GetService("UserInputService"):GetMouseLocation()
             local X = math.clamp(MouseLocation.X - background.AbsolutePosition.X, 600, 9999)
             local Y = math.clamp((MouseLocation.Y - 36) - background.AbsolutePosition.Y, 500, 9999)
             currentsize = UDim2.new(0, X, 0, Y)
