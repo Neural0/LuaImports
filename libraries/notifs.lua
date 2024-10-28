@@ -1,4 +1,4 @@
-function addnotification(message, duration, color)
+function notification(message, duration, color)
     local Position = Vector2.new(25, 50);
 	local notification = {
         Container = nil, Objects = {}
