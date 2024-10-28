@@ -7,7 +7,7 @@ local get_mouse = cloneref(game:GetService("Players")).LocalPlayer or game:GetSe
 
 local connections, objects
 function uitools.configure(extconnections, extobjects)
-    connections, extobjects = extconnections, extobjects
+    connections, objects = extconnections, extobjects
 end
 
 local function addConnection(connection)  table.insert(connections, connection) end
