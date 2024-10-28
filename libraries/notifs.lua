@@ -3,6 +3,8 @@ function notification(message, duration, color)
 	local notification = {
         Container = nil, Objects = {}
     };
+    local menu = self
+    local functions = self.self.functions
 
     local Notif_UI = cloneref(Instance.new("ScreenGui", gethui()))
     Notif_UI.Name = mysterium.functions:random_string(10)
@@ -14,8 +16,8 @@ function notification(message, duration, color)
 	NotifContainer.Position = UDim2.new(0,Position.X, 0, Position.Y)
 	NotifContainer.AutomaticSize = Enum.AutomaticSize.X
 	NotifContainer.Size = UDim2.new(0,0,0,16)
-	NotifContainer.BACKGROUNDColor3 = Color3.new(1,1,1)
-	NotifContainer.BACKGROUNDTransparency = 1
+	NotifContainer.BackgroundColor3 = Color3.new(1,1,1)
+	NotifContainer.BackgroundTransparency = 1
 	NotifContainer.BorderSizePixel = 0
 	NotifContainer.BorderColor3 = Color3.new(0,0,0)
 	NotifContainer.ZIndex = 99999999
@@ -24,22 +26,22 @@ function notification(message, duration, color)
 	local Outline = Instance.new("Frame")
 	Outline.Name = "Outline"
 	Outline.AutomaticSize = Enum.AutomaticSize.X
-	Outline.BACKGROUNDColor3 = Color3.fromRGB(17,17,17)
+	Outline.BackgroundColor3 = Color3.fromRGB(17,17,17)
 	Outline.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Outline.Position = UDim2.new(0.01, 0, 0.02, 0)
 	Outline.Size = UDim2.new(0, 0, 0, 16)
 	Outline.Parent = NotifContainer
-	Outline.BACKGROUNDTransparency = 1
+	Outline.BackgroundTransparency = 1
 	table.insert(notification.Objects, Outline)
 
 	local Inline = Instance.new("Frame")
 	Inline.Name = "Inline"
-	Inline.BACKGROUNDColor3 = Color3.fromRGB(5, 5, 5)
+	Inline.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
 	Inline.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Inline.BorderSizePixel = 0
 	Inline.Position = UDim2.new(0, 1, 0, 1)
 	Inline.Size = UDim2.new(1, -2, 1, -2)
-	Inline.BACKGROUNDTransparency = 1
+	Inline.BackgroundTransparency = 1
     Inline.Parent = Outline
 	table.insert(notification.Objects, Inline)
 
@@ -52,8 +54,8 @@ function notification(message, duration, color)
 	Value.TextStrokeTransparency = 0
 	Value.TextXAlignment = Enum.TextXAlignment.Left
 	Value.AutomaticSize = Enum.AutomaticSize.X
-	Value.BACKGROUNDColor3 = Color3.fromRGB(20, 20, 20)
-	Value.BACKGROUNDTransparency = 1
+	Value.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	Value.BackgroundTransparency = 1
 	Value.Size = UDim2.new(0, 0, 1, 0)
 	Value.TextTransparency = 1
     Value.Parent = Inline
@@ -68,12 +70,12 @@ function notification(message, duration, color)
 
 	local Accent = Instance.new("Frame")
 	Accent.Name = "Accent"
-	Accent.BACKGROUNDColor3 = color ~= nil and color or mysterium.menu.menu_colors.accent
+	Accent.BackgroundColor3 = color ~= nil and color or mysterium.menu.menu_colors.accent
 	Accent.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Accent.BorderSizePixel = 0
 	Accent.Size = UDim2.new(1, 0, 0, 1)
 	Accent.Parent = Outline
-	Accent.BACKGROUNDTransparency = 1
+	Accent.BackgroundTransparency = 1
 	table.insert(notification.Objects, Accent)
 
 	function notification:remove()
