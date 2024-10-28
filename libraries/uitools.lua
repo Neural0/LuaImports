@@ -9,7 +9,7 @@ function uitools.configure(extconnections, extobjects)
     connections, objects = extconnections, extobjects
 end
 
-local function addConnection(connection)  table.insert(connections, connection) end
+local function addConnection(connection)  table.insert(connections, connection)  return connection end
 
 function uitools.create(Class: Instance, Properties: PhysicalProperties)
     local _Instance = type(Class) == 'string' and Instance.new(Class) or Class
