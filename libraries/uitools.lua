@@ -2,15 +2,15 @@ local uitools = {}
 
 local UserInputService = cloneref(game:GetService("UserInputService")) or game:GetService("UserInputService")
 local TweenService = cloneref(game:GetService("TweenService")) or game:GetService("TweenService")
-
+local get_mouse = cloneref(game:GetService("Players")).LocalPlayer or game:GetService("Players").LocalPlayer:GetMouse()
 -- Helper function to add connections
 
 local connections, objects
 function uitools.configure(extconnections, extobjects)
-    connections, objects = extconnections, extobjects
+    connections, extobjects = extconnections, extobjects
 end
 
-local function addConnection(connection)  table.insert(connections, connection) return connection end
+local function addConnection(connection)  table.insert(connections, connection) end
 
 function uitools.create(Class: Instance, Properties: PhysicalProperties)
     local _Instance = type(Class) == 'string' and Instance.new(Class) or Class
@@ -133,6 +133,28 @@ function uitools.draggable(object: Instance, ignored: Instance)
     end))
 
     addConnection(UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = false
+        end
+    end))
+end
+
+function uitools.resizable(background: Instance, object: Instance)
+    local start, objectposition, dragging, currentpos, currentsize
+
+   addConnection(object.MouseButton1Down:Connect(function(input)
+        dragging = true
+    end))
+    addConnection(get_mouse.Move:Connect(function(input)
+        if dragging then
+            local MouseLocation = UserInputService:GetMouseLocation()
+            local X = math.clamp(MouseLocation.X - background.AbsolutePosition.X, 600, 9999)
+            local Y = math.clamp((MouseLocation.Y - 36) - background.AbsolutePosition.Y, 500, 9999)
+            currentsize = UDim2.new(0, X, 0, Y)
+            background.Size = currentsize
+        end
+    end))
+    addConnection(game:GetService("UserInputService").InputEnded:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = false
         end
