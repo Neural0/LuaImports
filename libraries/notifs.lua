@@ -114,4 +114,4 @@ function notification(message, duration, color)
 	return notification;
 end
 
-return addnotification
+return notification
