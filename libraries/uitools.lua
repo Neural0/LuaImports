@@ -9,7 +9,7 @@ function uitools.configure(extconnections, extobjects)
     connections, objects = extconnections, extobjects
 end
 
-local function addConnection(connection)  table.insert(connections, connection)  return connection end
+local function addConnection(connection)  table.insert(connections, connection) return connection end
 
 function uitools.create(Class: Instance, Properties: PhysicalProperties)
     local _Instance = type(Class) == 'string' and Instance.new(Class) or Class
@@ -139,16 +139,16 @@ function uitools.draggable(object: Instance, ignored: Instance)
 end
 
 function uitools.resizable(background: Instance, object: Instance)
-    local start, objectposition, dragging, currentpos, currentsize
-
+    local dragging, currentsize
+    local presetsize = background.Size
    addConnection(object.MouseButton1Down:Connect(function(input)
         dragging = true
     end))
     addConnection(game:GetService("Players").LocalPlayer:GetMouse().Move:Connect(function(input)
         if dragging then
             local MouseLocation = game:GetService("UserInputService"):GetMouseLocation()
-            local X = math.clamp(MouseLocation.X - background.AbsolutePosition.X, 600, 9999)
-            local Y = math.clamp((MouseLocation.Y - 36) - background.AbsolutePosition.Y, 500, 9999)
+            local X = math.clamp(MouseLocation.X - background.AbsolutePosition.X, presetsize.AbsoluteSize.X, 9999)
+            local Y = math.clamp((MouseLocation.Y - 36) - background.AbsolutePosition.Y, presetsize.AbsoluteSize.Y, 9999)
             currentsize = UDim2.new(0, X, 0, Y)
             background.Size = currentsize
         end
