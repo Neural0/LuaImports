@@ -1,36 +1,47 @@
-if not isfile or not writefile or not getcustomasset then error("executor not supported") return end
-
-local fontmanager = {}
-
 local HttpService = cloneref(game:GetService("HttpService"));
-local function register(Name, Asset)
-    if not isfile(Asset.Id) then writefile(Asset.Id, Asset.Font) end
 
-    local Data = {
-        name = Name,
-        faces = {{
-            name = "Regular",
-            weight = 400,
-            style = "normal",
-            assetId = getcustomasset(Asset.Id)
-        }}
-    }
-    
-    writefile(Name .. ".font", HttpService:JSONEncode(Data))
-    return getcustomasset(Name .. ".font")
+if not isfolder("DrawingFontCache") then
+    makefolder("DrawingFontCache")
 end
 
-function fontmanager.create(name)
-	local decoded = request({Url = "https://raw.githubusercontent.com/neuralls/Lutra/refs/heads/main/Fonts/" .. name}).Body
-    local font = register(name,{
-        Id = name .. ".ttf", Font = crypt.base64.decode(decoded)
-    })
+local fontmanager = { Fonts = {} }
+
+function fontmanager.create(FontName, FontSource)
+    if string.match(FontSource,"https") then
+        FontSource = request({Url = FontSource .. FontName}).Body
+    end
+
+    local FontObject
+
+    local TempPath = HttpService:GenerateGUID(false)
+    if not isfile(FontSource) then
+        writefile(`DrawingFontCache/{FontName}.ttf`, crypt.base64.decode(FontSource))
+        FontSource = `DrawingFontCache/{FontName}.ttf`
+    end
+
+    writefile(TempPath, HttpService:JSONEncode({
+        ["name"] = FontName,
+        ["faces"] = {
+            {
+                ["name"] = "Regular",
+                ["weight"] = 100,
+                ["style"] = "normal",
+                ["assetId"] = getcustomasset(FontSource)
+            }
+        }
+    }))
+
+    FontObject = Font.new(getcustomasset(TempPath), Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+    fontmanager.Fonts[FontName] = FontObject
+    delfile(TempPath)
+
+    return FontObject
 end
-function fontmanager.get(Name)
-    if isfile(Name .. ".font") then
-        return Font.new(getcustomasset(Name .. ".font"))
-    else warning("Font" .. Name .. "Not Found")
-    end;
+
+function fontmanager.list()
+    for name,font in pairs(fontmanager.Fonts) do
+        print(name, "=", font.Object)
+    end
 end
 
 return fontmanager
