@@ -147,8 +147,8 @@ function uitools.resizable(background: Instance, object: Instance)
     addConnection(game:GetService("Players").LocalPlayer:GetMouse().Move:Connect(function(input)
         if dragging then
             local MouseLocation = game:GetService("UserInputService"):GetMouseLocation()
-            local X = math.clamp(MouseLocation.X - background.AbsolutePosition.X, presetsize.AbsoluteSize.X, 9999)
-            local Y = math.clamp((MouseLocation.Y - 36) - background.AbsolutePosition.Y, presetsize.AbsoluteSize.Y, 9999)
+            local X = math.clamp(MouseLocation.X - background.AbsolutePosition.X, presetsize.X.Offset, 9999)
+            local Y = math.clamp((MouseLocation.Y - 36) - background.AbsolutePosition.Y, presetsize.Y.Offset, 9999)
             currentsize = UDim2.new(0, X, 0, Y)
             background.Size = currentsize
         end
