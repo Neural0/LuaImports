@@ -81,7 +81,7 @@ function uitools.stroke(parameters)
             Color = props.Color,
             Thickness = props.Thickness,
             ApplyStrokeMode = props.StrokeMode,
-            LineJoinMode = props.Mode
+            LineJoinMode = props.JoinMode
         })
     else
         stroke = uitools.create("UIStroke", {
