@@ -80,7 +80,7 @@ function uitools.stroke(parameters)
             Parent = strokeholder,
             Color = props.Color,
             Thickness = props.Thickness,
-            ApplyStrokeMode = props.JoinMode,
+            ApplyStrokeMode = props.StrokeMode,
             LineJoinMode = props.Mode
         })
     else
