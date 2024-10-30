@@ -63,7 +63,8 @@ function uitools.stroke(parameters)
         Thickness   = parameters.Thickness or 1,
         _ZIndex     = parameters._ZIndex or 1,
         Color       = parameters.Color or Color3.new(1, 1, 1),
-        Mode        = parameters.Mode or Enum.LineJoinMode.Miter
+        JoinMode    = parameters.JoinMode or Enum.LineJoinMode.Miter,
+        StrokeMode  = parameters.StrokeMode or Enum.ApplyStrokeMode.Border
     }
     local stroke
     if props.Inner and props.Padding then
@@ -79,7 +80,7 @@ function uitools.stroke(parameters)
             Parent = strokeholder,
             Color = props.Color,
             Thickness = props.Thickness,
-            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+            ApplyStrokeMode = props.JoinMode,
             LineJoinMode = props.Mode
         })
     else
@@ -87,8 +88,8 @@ function uitools.stroke(parameters)
             Parent = props.GUIOBJECT,
             Color = props.Color,
             Thickness = props.Thickness,
-            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-            LineJoinMode = props.Mode
+            ApplyStrokeMode = props.StrokeMode,
+            LineJoinMode = props.JoinMode
         })
     end
     return stroke
