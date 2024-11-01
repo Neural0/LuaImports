@@ -34,14 +34,24 @@ function uitools.tween(object, goal, callback)
     tween:Play()
 end
 
-function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, clickignore: boolean)
+function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, clickignore: table)
+    local function allTrue(tbl)
+        if tbl == nil then return true end
+        for _, value in pairs(tbl) do
+            if not value then return false end
+        end
+        return true
+    end
+
     addConnection(GUIOBJECT.MouseEnter:Connect(function()
         if onEnter then onEnter() end
-        
+
         local input
         input = addConnection(UserInputService.InputBegan:Connect(function(userInput)
             if userInput.UserInputType == Enum.UserInputType.MouseButton1 then
-                if onClick and not clickignore then onClick() end
+                if onClick and allTrue(clickignore) then
+                    onClick()
+                end
             end
         end))
 
