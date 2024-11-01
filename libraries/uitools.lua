@@ -35,10 +35,10 @@ function uitools.tween(object, goal, callback)
 end
 
 function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, clickignore: table)
-    local function allTrue(tbl)
+    local function allFalse(tbl)
         if tbl == nil then return true end
         for _, value in pairs(tbl) do
-            if not value then return false end
+            if value then return false end
         end
         return true
     end
@@ -49,7 +49,7 @@ function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, cli
         local input
         input = addConnection(UserInputService.InputBegan:Connect(function(userInput)
             if userInput.UserInputType == Enum.UserInputType.MouseButton1 then
-                if onClick and allTrue(clickignore) then
+                if onClick and allFalse(clickignore) then
                     onClick()
                 end
             end
