@@ -47,7 +47,7 @@ function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, cli
         if onEnter then onEnter() end
 
         local input
-        input = addConnection(services["UserInputService"].InputBegan:Connect(function(userInput)
+        input = addConnection(UserInputService.InputBegan:Connect(function(userInput)
             if userInput.UserInputType == Enum.UserInputType.MouseButton1 then
                 if onClick and allFalse(clickignore) then
                     onClick()
