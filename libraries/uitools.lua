@@ -37,8 +37,8 @@ end
 function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, clickignore: table)
     local function allFalse(tbl)
         if tbl == nil then return true end
-        for _, value in pairs(tbl) do
-            if value then return false end
+        for _, func in pairs(tbl) do
+            if func() then return false end
         end
         return true
     end
@@ -47,7 +47,7 @@ function uitools.mouseEvents(GUIOBJECT: Instance, onEnter, onLeave, onClick, cli
         if onEnter then onEnter() end
 
         local input
-        input = addConnection(UserInputService.InputBegan:Connect(function(userInput)
+        input = addConnection(services["UserInputService"].InputBegan:Connect(function(userInput)
             if userInput.UserInputType == Enum.UserInputType.MouseButton1 then
                 if onClick and allFalse(clickignore) then
                     onClick()
